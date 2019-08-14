@@ -20,51 +20,51 @@ from enterprise.utils import get_request_value
 
 
 class DataSharingConsentView(APIView):
-    """
-        **Use Cases**
-
-            Presents a generic data sharing consent API to applications
-            that have Enterprise customers who require data sharing
-            consent from users.
-
-        **Behavior**
-
-            Implements GET, POST, and DELETE which each have roughly
-            the following behavior (see their individual handlers for
-            more documentation):
-
-            GET /consent/api/v1/data_sharing_consent?username=bob&enterprise_customer_uuid=ENTERPRISE-UUID&course_id=ID
-            >>> {
-            >>>     "username": "bob",
-            >>>     "course_id": "course-v1:edX+DemoX+Demo_Course",
-            >>>     "enterprise_customer_uuid": "enterprise-uuid-goes-right-here",
-            >>>     "exists": False,
-            >>>     "consent_provided": False,
-            >>>     "consent_required": True,
-            >>> }
-
-            If the ``exists`` key is false, then the body will be returned
-            with a 404 Not Found error code; otherwise, 200 OK. If either
-            of ``enterprise_customer_uuid`` or ``username`` is not provided, an
-            appropriate 400-series error will be returned.
-
-            POST or DELETE /consent/api/v1/data_sharing_consent
-            >>> {
-            >>>     "username": "bob",
-            >>>     "course_id": "course-v1:edX+DemoX+Demo_Course",
-            >>>     "enterprise_customer_uuid": "enterprise-uuid-goes-right-here"
-            >>> }
-
-            The API accepts JSON objects with these key-value pairs for
-            POST or DELETE.
-
-        **Notes**
-
-            ``course_id`` specifies a course key (course-v1:edX+DemoX),
-            and not a course run key (course-v1:edX+DemoX+Demo_Course).
-
-    """
-
+    # """
+    #     **Use Cases**
+    # 
+    #         Presents a generic data sharing consent API to applications
+    #         that have Enterprise customers who require data sharing
+    #         consent from users.
+    # 
+    #     **Behavior**
+    # 
+    #         Implements GET, POST, and DELETE which each have roughly
+    #         the following behavior (see their individual handlers for
+    #         more documentation):
+    # 
+    #         GET /consent/api/v1/data_sharing_consent?username=bob&enterprise_customer_uuid=ENTERPRISE-UUID&course_id=ID
+    #         >>> {
+    #         >>>     "username": "bob",
+    #         >>>     "course_id": "course-v1:edX+DemoX+Demo_Course",
+    #         >>>     "enterprise_customer_uuid": "enterprise-uuid-goes-right-here",
+    #         >>>     "exists": False,
+    #         >>>     "consent_provided": False,
+    #         >>>     "consent_required": True,
+    #         >>> }
+    # 
+    #         If the ``exists`` key is false, then the body will be returned
+    #         with a 404 Not Found error code; otherwise, 200 OK. If either
+    #         of ``enterprise_customer_uuid`` or ``username`` is not provided, an
+    #         appropriate 400-series error will be returned.
+    # 
+    #         POST or DELETE /consent/api/v1/data_sharing_consent
+    #         >>> {
+    #         >>>     "username": "bob",
+    #         >>>     "course_id": "course-v1:edX+DemoX+Demo_Course",
+    #         >>>     "enterprise_customer_uuid": "enterprise-uuid-goes-right-here"
+    #         >>> }
+    # 
+    #         The API accepts JSON objects with these key-value pairs for
+    #         POST or DELETE.
+    # 
+    #     **Notes**
+    # 
+    #         ``course_id`` specifies a course key (course-v1:edX+DemoX),
+    #         and not a course run key (course-v1:edX+DemoX+Demo_Course).
+    # 
+    # """
+    # 
     permission_classes = (permissions.IsStaffOrUserInRequest,)
     authentication_classes = (JwtAuthentication, BearerAuthentication, SessionAuthentication,)
     throttle_classes = (ServiceUserThrottle,)
