@@ -18,7 +18,11 @@ from django.conf import settings
 from django.utils import timezone
 
 from enterprise.constants import COURSE_MODE_SORT_ORDER, EXCLUDED_COURSE_MODES
-from enterprise.utils import NotConnectedToOpenEdX, get_enterprise_worker_user
+try:
+    from enterprise.utils import NotConnectedToOpenEdX, get_enterprise_worker_user
+except ImportError:
+    NotConnectedToOpenEdX = None
+    get_enterprise_worker_user = None
 
 try:
     from openedx.core.djangoapps.embargo import api as embargo_api

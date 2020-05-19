@@ -47,6 +47,8 @@ try:
 except ImportError:
     CatalogIntegration = None
 
+from enterprise.api_client.enterprise_catalog import EnterpriseCatalogApiClient
+
 try:
     from lms.djangoapps.branding.api import get_url
 except ImportError:
@@ -1000,29 +1002,17 @@ def _get_service_worker(service_worker_username):
         return None
 
 
-def discovery_query_url(content_filter, html_format=True):
+def get_enterprise_catalog_preview_url(uuid, html_format=True):
     """
-    Return discovery url for preview.
+    Get the url for the preview information for an enterprise catalog
     """
-    if CatalogIntegration is None:
-        raise NotConnectedToOpenEdX(
-            _(
-                'To get a CatalogIntegration object, this package must be '
-                'installed in an Open edX environment.'
-            )
-        )
-    discovery_root_url = CatalogIntegration.current().get_internal_api_url()
-    disc_url = '{discovery_root_url}{search_all_endpoint}?{query_string}'.format(
-        discovery_root_url=discovery_root_url,
-        search_all_endpoint='search/all/',
-        query_string=urlencode(content_filter, doseq=True)
-    )
+    preview_url = EnterpriseCatalogApiClient.API_BASE_URL + EnterpriseCatalogApiClient.GET_CONTENT_METADATA_ENDPOINT.format(uuid)
     if html_format:
         return format_html(
             '<a href="{url}" target="_blank">Preview</a>',
-            url=disc_url
+            url=preview_url
         )
-    return disc_url
+    return preview_url
 
 
 def can_use_enterprise_catalog(enterprise_uuid):
